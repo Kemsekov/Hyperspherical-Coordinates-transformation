@@ -6,4 +6,15 @@ This is how we define a spherical coordinate system in 3 dimensions, see https:/
 This piece of code gives you generalized tool to do hyperspherical transformation for any n-dimensonal vector to hyperspherical
 coordinates system and reverse.
 
-Very useful tool
+Very useful tool.
+
+Here out angles
+$$\phi_1,\phi_2 ... \phi_{n-1} $$
+are defined over $[0;\pi]$
+
+meanwhile $\phi_{n-1}$ is over $[0;2 \pi]$
+
+so out hyperspherical coordinates is build as following:
+$$r, \phi_1, \phi_2, \phi_{n-1}$$
+
+where $r$ is cartesian vector length
