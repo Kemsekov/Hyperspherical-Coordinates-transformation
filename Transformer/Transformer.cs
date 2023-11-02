@@ -37,13 +37,7 @@ public class HypersphericalCoordinatesTransformer {
     public static double[] CartesianToHyperspherical(double[] cartesian) {
         int dimension = cartesian.Length;
         double[] hyperspherical = new double[dimension];
-        double r = 0.0;
-
-        foreach (double x in cartesian) {
-            r += x * x;
-        }
-
-        r = Math.Sqrt(r);
+        double r = Math.Sqrt(cartesian.Sum(x=>x*x));
         hyperspherical[0] = r;
 
         if (r == 0.0) {

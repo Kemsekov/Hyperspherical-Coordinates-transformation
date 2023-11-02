@@ -1,3 +1,5 @@
+using System.Diagnostics.Contracts;
+
 namespace Tests;
 
 public class EnsureTransformation
