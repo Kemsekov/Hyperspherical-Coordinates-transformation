@@ -8,13 +8,13 @@ coordinates system and reverse.
 
 Very useful tool.
 
-Here out angles
-$$\phi_1,\phi_2 ... \phi_{n-1} $$
+Here angles
+$$\phi_1,\phi_2 ... \phi_{n-2} $$
 are defined over $[0;\pi]$
 
 meanwhile $\phi_{n-1}$ is over $[0;2 \pi]$
 
-so out hyperspherical coordinates is build as following:
+so hyperspherical coordinates is build as following:
 $$r, \phi_1, \phi_2, \phi_{n-1}$$
 
 where $r$ is cartesian vector length
