@@ -2,8 +2,8 @@ using System.Diagnostics.Contracts;
 
 namespace Tests;
 
-public class EnsureTransformation
-{
+public class EnsureTransformation{
+
     [Fact]
     void CartesianToHyperspherical()
     {
@@ -12,8 +12,8 @@ public class EnsureTransformation
             .Select(x => Random.Shared.NextDouble() * Random.Shared.Next(5))
             .ToArray();
 
-        var hyperspherical = HypersphericalCoordinatesTransformer.CartesianToHyperspherical(cartesian);
-        var cartesianReverse = HypersphericalCoordinatesTransformer.HypersphericalToCartesian(hyperspherical);
+        var hyperspherical = Transformer.CartesianToHyperspherical(cartesian);
+        var cartesianReverse = Transformer.HypersphericalToCartesian(hyperspherical);
 
         var error = cartesianReverse.Zip(cartesian).Sum(x => Math.Abs(x.First - x.Second));
         Assert.True(error<1e-10);
@@ -25,9 +25,9 @@ public class EnsureTransformation
             .Select(x => Random.Shared.NextDouble() * Math.PI * 2)
             .ToArray();
 
-        var cartesian = HypersphericalCoordinatesTransformer.HypersphericalToCartesian(hyperspherical);
-        var hypersphericalReverse = HypersphericalCoordinatesTransformer.CartesianToHyperspherical(cartesian);
-        var cartesianReverse = HypersphericalCoordinatesTransformer.HypersphericalToCartesian(hypersphericalReverse);
+        var cartesian = Transformer.HypersphericalToCartesian(hyperspherical);
+        var hypersphericalReverse = Transformer.CartesianToHyperspherical(cartesian);
+        var cartesianReverse = Transformer.HypersphericalToCartesian(hypersphericalReverse);
 
         var error = cartesianReverse.Zip(cartesian).Sum(x => Math.Abs(x.First - x.Second));
         Assert.True(error<1e-10);
@@ -40,10 +40,10 @@ public class EnsureTransformation
             .Select(x => Random.Shared.NextDouble() * Math.PI * 2)
             .ToArray();
 
-        var hyperspherical1 = HypersphericalCoordinatesTransformer.CartesianToHyperspherical(cartesian);
-        var cartesian1 = HypersphericalCoordinatesTransformer.HypersphericalToCartesian(hyperspherical1);
-        var hyperspherical2 = HypersphericalCoordinatesTransformer.CartesianToHyperspherical(cartesian1);
-        var cartesian2 = HypersphericalCoordinatesTransformer.HypersphericalToCartesian(hyperspherical2);
+        var hyperspherical1 = Transformer.CartesianToHyperspherical(cartesian);
+        var cartesian1 = Transformer.HypersphericalToCartesian(hyperspherical1);
+        var hyperspherical2 = Transformer.CartesianToHyperspherical(cartesian1);
+        var cartesian2 = Transformer.HypersphericalToCartesian(hyperspherical2);
 
         var error1 = cartesian.Zip(cartesian1).Sum(x => Math.Abs(x.First - x.Second));
         var error2 = hyperspherical1.Zip(hyperspherical2).Sum(x => Math.Abs(x.First - x.Second));

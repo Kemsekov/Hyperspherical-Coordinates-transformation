@@ -1,5 +1,5 @@
-
-public class HypersphericalCoordinatesTransformer {
+using MathNet.Numerics.LinearAlgebra.Double;
+public class Transformer {
     /// <summary>
     /// For valid hyperspherical coordinates it uniquely maps hyperspherical coordinates to cartesian
     /// </summary>
@@ -57,19 +57,60 @@ public class HypersphericalCoordinatesTransformer {
         }
 
         theta = cartesian[n];
-        theta = 2 * Math.Atan2(1.0, (cartesian[n-1] + Math.Sqrt(cartesian[n-1] * cartesian[n-1] + theta * theta)) / theta);
+        theta = theta==0 ? 0 : 2 * Math.Atan2(1.0, (cartesian[n-1] + Math.Sqrt(cartesian[n-1] * cartesian[n-1] + theta * theta)) / theta);
         hyperspherical[n] = theta;
 
         return hyperspherical;
     }
 
     public static void Main(string[] args) {
-        // Example usage
-        double[] hyperspherical = {1.0, Math.PI / 4.0, Math.PI / 6.0};
-        double[] cartesian = HypersphericalToCartesian(hyperspherical);
-        Console.WriteLine("Cartesian Coordinates: [{0}]", string.Join(", ", cartesian));
+        
+        var mat = DenseMatrix.Create(3,3,(_,_)=>Random.Shared.NextDouble()*Random.Shared.Next(10)-4);
+        var svd = mat.Svd();
+        var U = svd.U;
+        System.Console.WriteLine(U);
 
-        double[] convertedHyperspherical = CartesianToHyperspherical(cartesian);
-        Console.WriteLine("Hyperspherical Coordinates: [{0}]", string.Join(", ", convertedHyperspherical));
+        var angle1 = Random.Shared.NextDouble();
+        var angle2 =Math.PI/3;
+        var angle3 = Random.Shared.NextDouble();
+        for(int i = 0;i<3;i++){
+            var e = DenseVector.Create(3,0);
+            e[i]=1;
+            var eHy = CartesianToHyperspherical(e.ToArray());
+            // eHy[0]+=angle1;
+            eHy[1]+=angle2;
+            // eHy[2]+=angle3;
+
+            var newE = HypersphericalToCartesian(eHy);
+            System.Console.WriteLine($"({newE[0]:0.000},{newE[1]:0.000},{newE[2]:0.000})");
+        }
+
+        // for(int i = 0;i<5;i++){
+        //     var randV = DenseVector.Create(U.RowCount,_=>Random.Shared.NextDouble()*4-2);
+        //     randV/=randV.L2Norm();
+
+        //     var rotated = U*randV;
+        //     var r1 = DenseVector.OfArray(CartesianToHyperspherical(randV.ToArray()));
+        //     var r2 = DenseVector.OfArray(CartesianToHyperspherical(rotated.ToArray()));
+        //     System.Console.WriteLine(r1);
+        //     System.Console.WriteLine(r2);
+        //     System.Console.WriteLine("-------------------");
+        //     var diff = (r1-r2).PointwiseAbs();
+        //     diff.MapInplace(i=>(i+Math.PI)%Math.PI);
+        //     // System.Console.WriteLine(diff);
+        // }
+
+        // for(int i = 0;i<U.ColumnCount;i++){
+        //     var basis = DenseVector.Create(U.RowCount,0);
+        //     basis[i] = 1;
+        //     var rotation = U.Column(i);
+
+        //     var basisSphere = DenseVector.OfArray(CartesianToHyperspherical(basis.ToArray()));
+        //     var rotationSphere = DenseVector.OfArray(CartesianToHyperspherical(rotation.ToArray()));
+
+        //     System.Console.WriteLine(basisSphere-rotationSphere);
+        // }
+        // Example usage
+        
     }
 }
