@@ -69,6 +69,30 @@ public class Transformer {
 
         return hyperspherical;
     }
+    
+    public static double[] CartesianToSpherical(double[] cartesian){
+        var sum = cartesian[0]*cartesian[0];
+        var alpha = new double[cartesian.Length];
+        for(int i = 0;i<cartesian.Length-1;i++){
+            var nextSum = sum+cartesian[i+1]*cartesian[i+1];            
+            alpha[i+1]=Math.Acos(Math.Sqrt(sum/nextSum));
+            sum = nextSum;
+        }
+        alpha[0]=Math.Sqrt(sum);
+        return alpha;
+    }
+    public static double[] SphericalToCartesian(double[] spherical){
+        var cartesian = new double[spherical.Length];
+        var cosProduct = spherical[0];
+        for(int i = spherical.Length-2;i>=0;i--){
+            var prevAlpha = i>=1 ? Math.Sin(spherical[i]) : 1;
+            cosProduct*=Math.Cos(spherical[i+1]);
+            cartesian[i]=cosProduct*prevAlpha;
+        }
+        cartesian[^1]=spherical[0]*Math.Sin(spherical[^1]);
+        
+        return cartesian;
+    }
 
     public static void Main(string[] args) {
         
