@@ -1,9 +1,9 @@
 using System.Diagnostics.Contracts;
+using MathNet.Numerics.LinearAlgebra.Double;
 
 namespace Tests;
 
 public class EnsureTransformation{
-
     [Fact]
     void CartesianToHyperspherical()
     {
